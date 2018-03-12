@@ -137,7 +137,131 @@
                             <div id="chartContainerBar" style="height: 300px; width: 100%;"></div>
                             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-                            <div id="myPie"></div>
+
+
+                            <script src="https://d3js.org/d3.v5.js"></script>
+                            <script src="https://d3js.org/d3-array.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-color.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-format.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-time.v1.min.js"></script>
+                            <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+                            <script src="https://d3js.org/d3-scale.v2.min.js"></script>
+                            
+                            <h1>Another expression</h1>
+                            
+                            <svg>
+                                <text x=10 y=10>Billion</text>
+                            </svg>
+                            
+                            <style>
+                                svg{
+                                    width: 800px;
+                                    height: 500px;
+                                }
+                            </style>
+                            
+                            <script>
+                                var x = d3.scaleLinear()
+                                    .domain([2016,2019])
+                                    .range([80,1000]);
+                                var y = d3.scaleLinear()
+                                    .domain([0,90])
+                                    .range([260,0]);
+                                
+                                var xAxis = d3.axisBottom().scale(x);
+                                var yAxis = d3.axisLeft().scale(y);
+                                
+                                var svg = d3.select('svg');
+                            
+                                svg.append('g')
+                                .attr('transform','translate(0,250)')
+                                .call(xAxis);
+                            
+                                svg.append('g')
+                                .attr('transform','translate(80,0)')
+                                .call(yAxis);
+                            
+                               
+                            
+                            var dataset = [
+                                [2017, [{
+                                    'height': 2017,
+                                    'weight': 18,
+                                }, ]],
+                                [2018, [{
+                                    'height': 2018,
+                                    'weight': 60,
+                                }, ]],
+                               
+                                ]
+                            
+                            
+                                svg
+                                    .selectAll('circle')
+                                    .data(dataset[0][1])
+                                    .enter()
+                                    .append('circle')
+                                    .attr('cx',function(d) {
+                                       return x(d['height']);
+                                     })
+                                    .attr('cy',function(d) {
+                                       return y(d['weight']);
+                                     })
+                                    .attr('r', function(d) {
+                                       // return d['weight']/10
+                                        return Math.sqrt(d['weight']);
+                                    })
+                                    .attr('fill', '#cccccc');
+                            
+                            var keySnapshot = 0
+                            d3.interval(function() {
+                                keySnapshot = (keySnapshot + 1) % dataset.length;
+                            
+                            
+                                svg
+                                    .selectAll('circle')
+                                    .data(dataset[keySnapshot][1])
+                                    .transition()
+                                    .duration(1200)
+                                    .attr('cx',function(d) {
+                                       return x(d['height']);
+                                     })
+                                    .attr('cy',function(d) {
+                                       return y(d['weight']);
+                                     })
+                                    .attr('r', function(d) {
+                                       // return d['weight']/10
+                                        return Math.sqrt(d['weight']*20);
+                                    })
+                                    .attr('fill', '#cccccc');
+                            },500)
+                            
+                            
+                                    console.log("hi");
+                                //svg.append('circle').attr('cx',100).attr('cy',10).attr('r',10)
+                                //svg.append('circle').attr('cx',100).attr('cy',20).attr('r',10)
+                                //svg.append('circle').attr('cx',120).attr('cy',30).attr('r',5) 
+                                //svg.append('circle').attr('cx',180).attr('cy',50).attr('r',3) 
+                                //svg.append('circle').attr('cx',100).attr('cy',30).attr('r',10) 
+                                //svg.append('circle').attr('cx',100).attr('cy',30).attr('r',10) 
+                               
+                                //var frameHeight = 150;
+                                //for (i = 0; i < data.length; i++) {
+                                   // var x = data[i]['height'];
+                                    //var y = frameHeight - data[i]['weight'];
+                                    //svg.append('circle').attr('cx', x).attr('cy', y).attr('r', 3);
+                               // }
+                                
+                                
+                                
+                            </script>
+                            
+
+
+
+                            <div id="chartContainerBar"></div>
                             <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
                             <!-- <script src="https://d3js.org/d3-selection.v1.js"></script> -->
 
